@@ -1,37 +1,100 @@
-import { Typography } from "@mui/material"
-import Button from "@mui/material/Button"
-import Container from "@mui/material/Container"
-import Grid from "@mui/material/Grid2"
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import  Grid from "@mui/material/Grid2";
+import TextField from '@mui/material/TextField';
+import Typography from "@mui/material/Typography";
+import LockIcon from '@mui/icons-material/Lock';
+import { useState } from "react";
+import * as React from 'react';
+import Alert from '@mui/material/Alert';
+
 export default function Login(){
+
+    const [data, setData] = useState({user:'', password:'', showAlert: false, alertSuccess: false});
+
+    const bduser = 'patricia'
+    const bdpasswd = '1234'
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (data.user == bduser && data.password == bdpasswd) {
+            handleAlertSuccess();
+        }else{
+            handleAlertError();
+        }
+        console.log("Usuario: " + data.user);
+        console.log("Contraseña: " + data.password)
+     }
+
+     const handleAlertError = () =>{
+        setData({
+            ...data,
+             showAlert: true,
+             alertSuccess: false
+        })
+    }
+
+     const handleAlertSuccess = () =>{
+        setData({
+            ...data,
+             showAlert: true,
+             alertSuccess: true
+        })
+    }
+
+     const handleChangeUser = (e: React.ChangeEvent<HTMLInputElement>) =>{
+        setData({
+            ...data,
+            user: e.target.value
+        })
+    }
+
+    const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) =>{
+        setData({
+            ...data,
+            password: e.target.value
+        })
+    }
+
     return(
         <>
-            <Container role="main">
-                <Grid>
-                    <Typography variant="h1" color="primary">
-                        Página de Login de Miguel Riaño Rojas
-                    </Typography>
-                    <Typography variant="h2" color="secondary">
-                        Este es el segundo texto de mi página de Login
-                    </Typography>
-                    <Typography variant="h3" color="success">
-                        A la tercera H va la vencida
-                    </Typography>
-                    <Typography variant="subtitle1" color="warning">
-                        Este es el primer subtitulo de mi página de Login
-                    </Typography>
-                    <Typography variant="body1" color="error">
-                        Este es el cuerpo de la página de login
-                    </Typography>
-                    <Typography variant="caption" color="info">
-                        Que maravilla este caption
-                    </Typography>
-                </Grid>
-            <Grid container justifyContent={'center'}>
-                <Button variant="contained">Boton contenido</Button>
-                <Button variant="text">Boton de texto</Button>
-                <Button variant="outlined">Boton contorno</Button>
-            </Grid>
-            </Container>
+            <Paper elevation={12} square={false} sx={{padding: 2}}>
+                <Box component = 'form' onSubmit={handleSubmit}>
+                    <Grid container direction={'column'} spacing={2}>
+                        <Grid>
+                            <Typography fontFamily={"consolas"} color="primary">
+                                    Sistema de Acceso
+                            </Typography>
+                            <LockIcon color="secondary"/>
+                        </Grid>
+                         <Grid>
+                            <TextField required label='Usuario' variant='outlined' fullWidth onChange={handleChangeUser}/>
+                        </Grid>
+                        <Grid>
+                            <TextField required type="password" label='Contraseña' variant='outlined' fullWidth onChange={handleChangePassword}/>
+                        </Grid>
+                        <Grid>
+                            <Button variant='contained' fullWidth type='submit'>Acceder</Button>
+                        </Grid>
+                        <Grid>
+                                {data.showAlert === true && data.alertSuccess === true  ? 
+                                    <Alert  severity="success">
+                                        Acceso concedido
+                                    </Alert> 
+                                    : data.showAlert === true && data.alertSuccess === false  ?
+                                    <Alert  severity="error">
+                                        Usuario y/o contraseña incorrectos
+                                    </Alert>
+                                    :
+                                    null
+                                }
+
+
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Paper>
         </>
     )
 }

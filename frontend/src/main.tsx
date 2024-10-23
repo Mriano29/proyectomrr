@@ -8,8 +8,8 @@ import {ThemeProvider } from '@mui/material/styles';
 
 const customTheme = createTheme({
   palette: {
-    mode: 'dark',
-    primary: {
+      mode: 'dark',
+      primary: {
       main: '#ec407a',
       light: '#e91e63',
       dark: '#d81b60',
@@ -19,7 +19,7 @@ const customTheme = createTheme({
     },
     text: {
       primary: '#fafafa',
-      secondary: 'rgba(193,57,57,0.7)',
+      secondary: '#fafafa', 
     },
     error: {
       main: '#b71c1c',
