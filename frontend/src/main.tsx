@@ -1,10 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-// import './index.css'
 import CssBaseline from '@mui/material/CssBaseline'
-import App from './App.tsx'
 import createTheme from '@mui/material/styles/createTheme';
 import {ThemeProvider } from '@mui/material/styles';
+import App from './App';
 
 const customTheme = createTheme({
   palette: {
@@ -31,7 +30,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider theme={customTheme}>
       <CssBaseline />
-      <App />
+        <App/>
     </ThemeProvider>
   </StrictMode>,
 )

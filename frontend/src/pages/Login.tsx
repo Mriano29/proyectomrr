@@ -2,6 +2,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import  Grid from "@mui/material/Grid2";
+import { useNavigate } from 'react-router-dom'
 import TextField from '@mui/material/TextField';
 import Typography from "@mui/material/Typography";
 import LockIcon from '@mui/icons-material/Lock';
@@ -12,6 +13,8 @@ import Alert from '@mui/material/Alert';
 export default function Login(){
 
     const [data, setData] = useState({user:'', password:'', showAlert: false, alertSuccess: false});
+
+    const navigate = useNavigate()
 
     const bduser = 'patricia'
     const bdpasswd = '1234'
@@ -41,6 +44,7 @@ export default function Login(){
              showAlert: true,
              alertSuccess: true
         })
+        navigate('/Home');
     }
 
      const handleChangeUser = (e: React.ChangeEvent<HTMLInputElement>) =>{
