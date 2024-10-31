@@ -9,6 +9,11 @@ import LockIcon from '@mui/icons-material/Lock';
 import { useState } from "react";
 import * as React from 'react';
 import Alert from '@mui/material/Alert';
+//Importamos el useDispatch del react-redux
+import { useDispatch} from 'react-redux'
+//Importamos las acciones que están en el fichero authSlice.ts
+import { authActions } from '../store/authSlice';
+
 
 export default function Login(){
 
@@ -16,7 +21,9 @@ export default function Login(){
 
     const navigate = useNavigate()
 
-    const bduser = 'patricia'
+    const dispatch = useDispatch()
+       
+    const bduser = 'miguel'
     const bdpasswd = '1234'
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,6 +51,10 @@ export default function Login(){
              showAlert: true,
              alertSuccess: true
         })
+        dispatch(authActions.login({
+            name: data.user,
+            rol: 'administrador'
+        }))
         navigate('/Home');
     }
 
@@ -93,8 +104,6 @@ export default function Login(){
                                     :
                                     null
                                 }
-
-
                         </Grid>
                     </Grid>
                 </Box>
