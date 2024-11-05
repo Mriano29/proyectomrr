@@ -22,19 +22,29 @@ export default function Login(){
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
-       
-    const bduser = 'miguel'
-    const bdpasswd = '1234'
+
+    async function isVerifiedUser () {
+        fetch(`http://localhost:3030/login?user=${data.user}&password=${data.password}`)
+        .then(response => response.json())
+        .then (response => {
+        console.log('Lo que nos llega de la base de datos: ')
+        console.log(response.data)
+        if (response.data.length !== 0){
+       //Si hay datos es que el usuario y contraseña son los correctos. Hago el dispatch y el
+       //navigate
+       handleAlertSuccess();
+        } else{
+       //Si no, realizo la lógica para alertar al usuario con usuario/contraseña son incorrectas
+       handleAlertError();
+        }
+       })
+       }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (data.user == bduser && data.password == bdpasswd) {
-            handleAlertSuccess();
-        }else{
-            handleAlertError();
-        }
         console.log("Usuario: " + data.user);
         console.log("Contraseña: " + data.password)
+        isVerifiedUser();
      }
 
      const handleAlertError = () =>{
