@@ -30,11 +30,8 @@ export default function Login(){
         console.log('Lo que nos llega de la base de datos: ')
         console.log(response.data)
         if (response.data.length !== 0){
-       //Si hay datos es que el usuario y contraseña son los correctos. Hago el dispatch y el
-       //navigate
        handleAlertSuccess();
         } else{
-       //Si no, realizo la lógica para alertar al usuario con usuario/contraseña son incorrectas
        handleAlertError();
         }
        })
