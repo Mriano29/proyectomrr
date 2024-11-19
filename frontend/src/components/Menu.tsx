@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid2";
 import Typography  from '@mui/material/Typography';
 import User from '@mui/icons-material/AccountCircle';
+import Admin from '@mui/icons-material/AddModerator';
 import Drawer from '@mui/material/Drawer';
 import HomeIcon from '@mui/icons-material/Home';
 import ReportIcon from '@mui/icons-material/Article';
@@ -28,6 +29,8 @@ export default function menu({ nombre }: { nombre: string }){
 
     const userData = useSelector((state: RootState) => state.authenticator)
     const isLogged = userData.isAutenticated
+    const user = userData.userName
+    const role = userData.userRol
 
     useEffect(() => {
         if (!isLogged) {
@@ -39,7 +42,7 @@ export default function menu({ nombre }: { nombre: string }){
        setOpen(!open)
     }
 
-  
+  console.log(role)
     const handleLogout = () =>{
         dispatch(authActions.logout())
         navigate('/');
@@ -107,8 +110,11 @@ export default function menu({ nombre }: { nombre: string }){
                                     {nombre}
                                 </Typography>
                             </Grid>
-                            <Grid sx={{marginLeft: {xs: '', sm:'auto'}}}>
-                                <User/>
+                            <Grid sx={{marginLeft: {xs: '', sm:'auto', display:'flex'}}} gap={1}>
+                               <Typography>
+                                    {user}
+                                </Typography>
+                                {role === 'admin' ? <Admin/>: <User/>}
                             </Grid>
                         </Grid>
                    </AppBar>

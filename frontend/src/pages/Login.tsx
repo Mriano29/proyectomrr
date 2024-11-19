@@ -30,7 +30,12 @@ export default function Login(){
         console.log('Lo que nos llega de la base de datos: ')
         console.log(response.data)
         if (response.data.length !== 0){
-       handleAlertSuccess();
+            dispatch(authActions.login({
+                name: response.data.nombre,
+                rol: response.data.rol
+            }))
+            handleAlertSuccess()
+            navigate('/Home');
         } else{
        handleAlertError();
         }
@@ -58,11 +63,6 @@ export default function Login(){
              showAlert: true,
              alertSuccess: true
         })
-        dispatch(authActions.login({
-            name: data.user,
-            rol: 'administrador'
-        }))
-        navigate('/Home');
     }
 
      const handleChangeUser = (e: React.ChangeEvent<HTMLInputElement>) =>{
