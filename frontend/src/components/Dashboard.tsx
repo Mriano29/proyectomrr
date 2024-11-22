@@ -72,7 +72,8 @@ export default function Dashboard() {
             })
     }
 
-    async function handleInsertItem() {
+    async function handleInsertItem(e: any) {
+        e.preventDefault()
         fetch(`http://localhost:3030/addItem?nombre=${item.nombre}&marca=${item.marca}&tipo=${item.tipo}&precio=${item.precio})`)
             .then(response => response.json())
             .then(response => {
@@ -125,8 +126,28 @@ export default function Dashboard() {
 
     return (
         <>
-            <Paper elevation={10} sx={{ padding: 2 }} square={false}>
-                <Box component='form' onSubmit={handleInsertItem}>
+       <Paper elevation={10} sx={{ padding: 2, margin:2 }} square={false}>
+        <Box component='form' onSubmit={handleInsertItem}>
+                        <Grid container alignContent={'center'} justifyContent={'center'} marginTop={2} direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 2, sm: 5.5 }}>
+                            <Grid>
+                                <TextField required label='Nombre' onChange={handleChangeName} value={item.nombre} />
+                            </Grid>
+                            <Grid>
+                                <TextField required label='Marca' onChange={handleChangeMarca} value={item.marca} />
+                            </Grid>
+                            <Grid>
+                                <TextField required label='Tipo' onChange={handleChangeType} value={item.tipo} />
+                            </Grid>
+                            <Grid>
+                                <TextField required label='Precio' type='number' onChange={handleChangePrecio} value={item.precio} />
+                            </Grid>
+                            <Button variant='contained' type='submit'>
+                                Insertar dato
+                            </Button>
+                        </Grid>
+                    </Box>
+        </Paper>
+            <Paper elevation={10} sx={{ padding: 2, margin:2  }} square={false}>
                 <Grid container direction={'column'} spacing={2} sx={{ marginTop: { xs: '10px' } }} >
                     <Grid sx={{ maxWidth: '100%', overflowX: 'auto' }}>
                         <TableContainer >
@@ -164,27 +185,7 @@ export default function Dashboard() {
                             </Table>
                         </TableContainer>
                     </Grid>
-                    <Box component={'form'}>
-                        <Grid container alignContent={'center'} justifyContent={'center'} marginTop={2} direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 2, sm: 5.5 }}>
-                            <Grid>
-                                <TextField required label='Nombre' onChange={handleChangeName} value={item.nombre} />
-                            </Grid>
-                            <Grid>
-                                <TextField required label='Marca' onChange={handleChangeMarca} value={item.marca} />
-                            </Grid>
-                            <Grid>
-                                <TextField required label='Tipo' onChange={handleChangeType} value={item.tipo} />
-                            </Grid>
-                            <Grid>
-                                <TextField required label='Precio' type='number' onChange={handleChangePrecio} value={item.precio} />
-                            </Grid>
-                            <Button variant='contained' type='submit'>
-                                Insertar dato
-                            </Button>
-                        </Grid>
-                    </Box>
                 </Grid>
-                </Box>
             </Paper>
         </>
     )
