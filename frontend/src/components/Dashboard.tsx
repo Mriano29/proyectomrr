@@ -11,6 +11,8 @@ import { useEffect } from 'react';
 import Grid from '@mui/material/Grid2';
 import { Box, TextField } from '@mui/material';
 import Paper from '@mui/material/Paper';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/index';
 
 export default function Dashboard() {
     /**
@@ -18,6 +20,8 @@ export default function Dashboard() {
      */
     const [inicio, setInicio] = useState(true);
     const [tableData, setTableData] = useState<itemType[]>([])
+    const userData = useSelector((state: RootState) => state.authenticator)
+    const role = userData.userRol
 
     interface itemType {
         id?: number
@@ -62,6 +66,7 @@ export default function Dashboard() {
             .then(response => response.json())
             .then(response => {
                 if (response === 1) {
+                    alert("Producto eliminado")
                     cargarDatosTabla()
                 }
             })
@@ -72,13 +77,14 @@ export default function Dashboard() {
             .then(response => response.json())
             .then(response => {
                 if (response === 1) {
+                    alert('Producto insertado')
                     cargarDatosTabla()
                     vaciarCampos()
                 }
             })
     }
 
-    function cargarDatosTabla(){
+    function cargarDatosTabla() {
         setInicio(true)
     }
 
@@ -113,64 +119,72 @@ export default function Dashboard() {
         })
     }
 
-    function vaciarCampos(){
+    function vaciarCampos() {
         setItem(itemInitialState)
     }
 
     return (
         <>
-            <Paper elevation={10} sx={{padding: 2}} square={false}>
-            <Grid container direction={'column'} spacing={2} sx={{ marginTop: { xs: '10px' } }} >
-                <Grid sx={{ maxWidth: '100%', overflowX: 'auto' }}>
-                    <TableContainer >
-                        <Table aria-label='Tabla de colección'>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell >Nombre</TableCell>
-                                    <TableCell>Marca</TableCell>
-                                    <TableCell>Tipo</TableCell>
-                                    <TableCell>Precio</TableCell>
-                                    <TableCell>Eliminar</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {tableData.map((row: itemType) => (
-                                    <TableRow key={row.id}>
-                                        <TableCell>{row.nombre}</TableCell>
-                                        <TableCell>{row.marca}</TableCell>
-                                        <TableCell>{row.tipo}</TableCell>
-                                        <TableCell>{row.precio}</TableCell>
-                                        <TableCell>
-                                            <Button onClick={() => handleDeleteItem(row)}>
-                                                <DeleteForever />
-                                            </Button>
-                                        </TableCell>
+            <Paper elevation={10} sx={{ padding: 2 }} square={false}>
+                <Box component='form' onSubmit={handleInsertItem}>
+                <Grid container direction={'column'} spacing={2} sx={{ marginTop: { xs: '10px' } }} >
+                    <Grid sx={{ maxWidth: '100%', overflowX: 'auto' }}>
+                        <TableContainer >
+                            <Table aria-label='Tabla de colección'>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell >Nombre</TableCell>
+                                        <TableCell>Marca</TableCell>
+                                        <TableCell>Tipo</TableCell>
+                                        <TableCell>Precio</TableCell>
+                                        {role === 'admin' ?
+                                            <TableCell>Eliminar</TableCell>
+                                            :
+                                            null}
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                </TableHead>
+                                <TableBody>
+                                    {tableData.map((row: itemType) => (
+                                        <TableRow key={row.id}>
+                                            <TableCell>{row.nombre}</TableCell>
+                                            <TableCell>{row.marca}</TableCell>
+                                            <TableCell>{row.tipo}</TableCell>
+                                            <TableCell>{row.precio}</TableCell>
+                                            {role == 'admin' ?
+                                                <TableCell>
+                                                    <Button onClick={() => handleDeleteItem(row)}>
+                                                        <DeleteForever />
+                                                    </Button>
+                                                </TableCell>
+                                                :
+                                                null}
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
+                    <Box component={'form'}>
+                        <Grid container alignContent={'center'} justifyContent={'center'} marginTop={2} direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 2, sm: 5.5 }}>
+                            <Grid>
+                                <TextField required label='Nombre' onChange={handleChangeName} value={item.nombre} />
+                            </Grid>
+                            <Grid>
+                                <TextField required label='Marca' onChange={handleChangeMarca} value={item.marca} />
+                            </Grid>
+                            <Grid>
+                                <TextField required label='Tipo' onChange={handleChangeType} value={item.tipo} />
+                            </Grid>
+                            <Grid>
+                                <TextField required label='Precio' type='number' onChange={handleChangePrecio} value={item.precio} />
+                            </Grid>
+                            <Button variant='contained' type='submit'>
+                                Insertar dato
+                            </Button>
+                        </Grid>
+                    </Box>
                 </Grid>
-                 <Box component={'form'}>
-                <Grid container alignContent={'center'} justifyContent={'center'} marginTop={2} direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 2, sm: 5.5 }}>
-                    <Grid>
-                        <TextField required label='Nombre' onChange={handleChangeName} value={item.nombre}/>
-                    </Grid>
-                    <Grid>
-                        <TextField required label='Marca' onChange={handleChangeMarca} value={item.marca}/>
-                    </Grid>
-                    <Grid>
-                        <TextField required label='Tipo' onChange={handleChangeType} value={item.tipo}/>
-                    </Grid>
-                    <Grid>
-                        <TextField required label='Precio' type='number' onChange={handleChangePrecio} value={item.precio}/>
-                    </Grid>
-                    <Button variant='contained' onClick={handleInsertItem}>
-                        Insertar dato
-                    </Button>
-                </Grid>
-            </Box>
-            </Grid>
+                </Box>
             </Paper>
         </>
     )
