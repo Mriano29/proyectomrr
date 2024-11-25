@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/index';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Tooltip } from '@mui/material';
 
 export default function menu({ nombre }: { nombre: string }) {
     const [open, setOpen] = useState(false)
@@ -50,7 +51,8 @@ export default function menu({ nombre }: { nombre: string }) {
 
     const DrawerList = (
         <List>
-              <Link to={'/home'} style={{textDecoration: 'none'}}>
+             <Tooltip title="Home" placement='right'>
+             <Link to={'/home'} style={{textDecoration: 'none'}}>
             <ListItem>
                 <IconButton>
                     <HomeIcon />
@@ -60,9 +62,11 @@ export default function menu({ nombre }: { nombre: string }) {
                 </IconButton>
             </ListItem>
             </Link>
+             </Tooltip>
             <Divider />
             {role === 'admin' ?
-                <Link to={'/reports'} style={{textDecoration: 'none'}}>
+                <Tooltip title="Reports" placement='right'>
+                         <Link to={'/reports'} style={{textDecoration: 'none'}}>
                     <ListItem>
                         <IconButton>
                             <ReportIcon />
@@ -72,10 +76,12 @@ export default function menu({ nombre }: { nombre: string }) {
                         </IconButton>
                     </ListItem>
                 </Link>
+                </Tooltip>
                 :
                 null}
             <Divider />
-            <Link to={''} style={{textDecoration: 'none'}}>
+            <Tooltip title="Ayuda" placement='right'>
+            <Link to={'/ManualDeAyuda.pdf'} target='_blank' style={{textDecoration: 'none'}}>
             <ListItem>
                 <IconButton>
                     <HelpIcon />
@@ -85,7 +91,9 @@ export default function menu({ nombre }: { nombre: string }) {
                 </IconButton>
             </ListItem>
             </Link>
+            </Tooltip>
             <Divider />
+            <Tooltip title="Cerrar sesión" placement='right'>
             <ListItem>
                 <IconButton onClick={handleLogout}>
                     <LogoutIcon />
@@ -94,6 +102,7 @@ export default function menu({ nombre }: { nombre: string }) {
                     </Typography>
                 </IconButton>
             </ListItem>
+            </Tooltip>
         </List>
     )
 
@@ -103,9 +112,11 @@ export default function menu({ nombre }: { nombre: string }) {
                 <AppBar>
                     <Grid container direction={{ xs: 'column', sm: 'row' }} spacing={2} padding={2} alignItems={'center'}>
                         <Grid>
-                            <IconButton onClick={handleDrawer} color='primary'>
+                           <Tooltip title="Menu">
+                           <IconButton onClick={handleDrawer} color='primary'>
                                 <MenuIcon />
                             </IconButton>
+                           </Tooltip>
                         </Grid>
                         <Grid>
                             <Typography >

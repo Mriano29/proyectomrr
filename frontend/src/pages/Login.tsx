@@ -13,6 +13,7 @@ import Alert from '@mui/material/Alert';
 import { useDispatch} from 'react-redux'
 //Importamos las acciones que están en el fichero authSlice.ts
 import { authActions } from '../store/authSlice';
+import { Tooltip } from "@mui/material";
 
 
 export default function Login(){
@@ -97,7 +98,11 @@ export default function Login(){
                             <TextField required type="password" label='Contraseña' variant='outlined' fullWidth onChange={handleChangePassword}/>
                         </Grid>
                         <Grid>
-                            <Button variant='contained' fullWidth type='submit'>Acceder</Button>
+                           <Tooltip title="Acceder">
+                                <Button variant='contained' fullWidth type='submit'>
+                                    Acceder
+                                </Button>
+                           </Tooltip>
                         </Grid>
                         <Grid>
                                 {data.showAlert === true && data.alertSuccess === true  ? 

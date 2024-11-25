@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import { useEffect } from 'react';
 import Grid from '@mui/material/Grid2';
-import { Box, TextField } from '@mui/material';
+import { Box, TextField, Tooltip } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/index';
@@ -141,9 +141,11 @@ export default function Dashboard() {
                             <Grid>
                                 <TextField required label='Precio' type='number' onChange={handleChangePrecio} value={item.precio} />
                             </Grid>
-                            <Button variant='contained' type='submit'>
-                                Insertar dato
-                            </Button>
+                            <Tooltip title="Insertar dato">
+                                <Button variant='contained' type='submit'>
+                                    Insertar dato
+                                </Button>
+                            </Tooltip>
                         </Grid>
                     </Box>
         </Paper>
@@ -173,9 +175,11 @@ export default function Dashboard() {
                                             <TableCell>{row.precio}</TableCell>
                                             {role == 'admin' ?
                                                 <TableCell>
+                                                    <Tooltip title="Eliminar producto">
                                                     <Button onClick={() => handleDeleteItem(row)}>
                                                         <DeleteForever />
                                                     </Button>
+                                                    </Tooltip>
                                                 </TableCell>
                                                 :
                                                 null}

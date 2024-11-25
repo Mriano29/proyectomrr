@@ -1,4 +1,4 @@
-import { Button, Toolbar } from "@mui/material";
+import { Button, Toolbar, Tooltip } from "@mui/material";
 import Menu from "../components/Menu";
 import { useState } from "react";
 import Informe from "../components/InformeColeccion";
@@ -27,9 +27,11 @@ export default function Reports(){
         <>
             <Menu nombre="Reports"/>
             <Toolbar/> 
+            <Tooltip title="Obtener tabla de informes">
             <Button variant="contained" onClick={handleData} sx={{margin: 5}}>
                 Informe colección
             </Button>
+            </Tooltip>
             {buttonPressed ? <Informe data={data}/> : null}
         </>
     )
