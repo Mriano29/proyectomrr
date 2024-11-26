@@ -36,9 +36,26 @@ async function deleteData (req, res) {
     datos que ha sido borrado. Si ese número es mayor que cero es que ha habido borrado en la base de datos.*/
     return result.affectedRows
     }
+
+    async function insertUser (req, res) {
+        const data = req.query
+        const result = await db.query(`insert into usuarios (nombre, login, password, rol) values ( ?, ?, ?, ?)`, [data.nombre, data.login, data.password, data.rol])
+        return result.affectedRows
+    }
+    async function getUsers (req, res) {
+        const rows = await db.query(
+        `select * from usuarios`
+        )
+        const data = helper.emptyOrRows(rows)
+        return {
+        data
+        }
+        }
     //Al final del fichero exporto las funciones getData, insertData y deleteData
     module.exports = {
     getData,
     insertData,
-    deleteData
+    deleteData,
+    insertUser,
+    getUsers
     }

@@ -33,7 +33,7 @@ const authSlice = createSlice({
     //que no recibimos ningún dato del usuario.
     logout: (_state) => {
     _state = initialAuthState // Cuando el usuario no está autenticado estamos en el estado inicial.
-    }
+    },
     }
    })
    //Exportamos las acciones del reducer en la variable authActions

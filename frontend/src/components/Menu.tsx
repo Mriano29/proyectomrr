@@ -5,8 +5,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid2";
 import Typography from '@mui/material/Typography';
-import User from '@mui/icons-material/AccountCircle';
-import Admin from '@mui/icons-material/AddModerator';
+import User from '@mui/icons-material/Adb';
+import Admin from '@mui/icons-material/AdminPanelSettings';
 import Drawer from '@mui/material/Drawer';
 import HomeIcon from '@mui/icons-material/Home';
 import ReportIcon from '@mui/icons-material/Article';
@@ -23,6 +23,8 @@ import { RootState } from '../store/index';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Tooltip } from '@mui/material';
+import GestionIcon from '@mui/icons-material/VerifiedUser';
+import Guest from '@mui/icons-material/InsertEmoticon';
 
 export default function menu({ nombre }: { nombre: string }) {
     const [open, setOpen] = useState(false)
@@ -80,6 +82,22 @@ export default function menu({ nombre }: { nombre: string }) {
                 :
                 null}
             <Divider />
+            {role === 'admin' ?
+                <Tooltip title="Gestión usuarios" placement='right'>
+                         <Link to={'/gestion'} style={{textDecoration: 'none'}}>
+                    <ListItem>
+                        <IconButton>
+                            <GestionIcon />
+                            <Typography>
+                                Gestión usuarios
+                            </Typography>
+                        </IconButton>
+                    </ListItem>
+                </Link>
+                </Tooltip>
+                :
+                null}
+            <Divider />
             <Tooltip title="Ayuda" placement='right'>
             <Link to={'/ManualDeAyuda.pdf'} target='_blank' style={{textDecoration: 'none'}}>
             <ListItem>
@@ -127,7 +145,10 @@ export default function menu({ nombre }: { nombre: string }) {
                             <Typography>
                                 {user}
                             </Typography>
-                            {role === 'admin' ? <Admin /> : <User />}
+                            {role === 'admin' ? <Admin /> : 
+                            role === 'user' ? <User /> :
+                            role === 'invitado' ? <Guest/>:
+                            null}
                         </Grid>
                     </Grid>
                 </AppBar>

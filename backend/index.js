@@ -71,3 +71,21 @@ app.get('/addItem', async function(req, res, next) {
             next(err);
             }
             })
+
+            app.get('/addUser', async function(req, res, next) {
+                try {
+                res.json(await items.insertUser(req))
+                } catch (err) {
+                console.error(`Error while inserting items `, err.message);
+                next(err);
+                }
+                })
+
+                app.get('/getUsers', async function(req, res, next) {
+                    try {
+                    res.json(await items.getUsers())
+                    } catch (err) {
+                    console.error(`Error while getting items `, err.message);
+                    next(err);
+                    }
+                    })

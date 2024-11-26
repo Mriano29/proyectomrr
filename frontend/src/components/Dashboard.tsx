@@ -142,7 +142,7 @@ export default function Dashboard() {
                                 <TextField required label='Precio' type='number' onChange={handleChangePrecio} value={item.precio} />
                             </Grid>
                             <Tooltip title="Insertar dato">
-                                <Button variant='contained' type='submit'>
+                                <Button variant='contained' type='submit' disabled={role==='invitado'}>
                                     Insertar dato
                                 </Button>
                             </Tooltip>
